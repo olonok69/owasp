@@ -1,0 +1,43 @@
+# OWASP Cheat Sheet Viewer Configuration
+# ==========================================
+
+# Firecrawl API Configuration
+firecrawl:
+  api_key: "${FIRECRAWL_API_KEY}"  # Set via environment variable
+  base_url: "https://api.firecrawl.dev/v1"
+  timeout: 60  # Request timeout in seconds
+  max_retries: 3
+  retry_delay: 2  # Seconds between retries
+
+# OWASP Cheat Sheet Series Configuration
+owasp:
+  base_url: "https://cheatsheetseries.owasp.org"
+  # Primary source for cheat sheet index (curated, alphabetical list)
+  cheatsheets_index: "https://cheatsheetseries.owasp.org/Glossary.html"
+
+# Cache Configuration
+cache:
+  enabled: true
+  directory: "./cache"
+  expiry_days: 90  # Cache validity period
+  index_expiry_days: 7  # Refresh cheatsheet index more frequently
+  max_size_mb: 500  # Maximum cache size
+
+# Application Settings
+app:
+  title: "OWASP Cheat Sheet Viewer"
+  page_icon: "🛡️"
+  layout: "wide"
+  default_cheatsheet: null  # Will use first available if null
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  file: "./logs/app.log"
+  max_size_mb: 10
+  backup_count: 5
+
+# Rate Limiting (to respect OWASP servers)
+rate_limit:
+  requests_per_minute: 30
+  burst_limit: 5

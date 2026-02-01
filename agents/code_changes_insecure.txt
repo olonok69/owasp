@@ -1,0 +1,54 @@
+diff --git a/app/api.py b/app/api.py
+new file mode 100644
+index 0000000..e1a2b3c
+--- /dev/null
++++ b/app/api.py
+@@
++import os
++import sqlite3
++from flask import Flask, request, make_response
++
++app = Flask(__name__)
++
++DB_PATH = "users.db"
++API_SECRET = "hardcoded-dev-secret"  # hardcoded secret
++
++
++def get_db():
++    return sqlite3.connect(DB_PATH)
++
++
++@app.route("/login", methods=["POST"])
++def login():
++    # SQL injection: unsanitized string formatting
++    username = request.form.get("username", "")
++    password = request.form.get("password", "")
++    conn = get_db()
++    cur = conn.cursor()
++    cur.execute(f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'")
++    row = cur.fetchone()
++    if row:
++        resp = make_response({"status": "ok"})
++        # Insecure cookie: no HttpOnly/Secure, static secret
++        resp.set_cookie("session", API_SECRET)
++        return resp
++    return {"error": "invalid creds"}, 401
++
++
++@app.route("/run", methods=["POST"])
++def run():
++    # Command injection: user-controlled input passed to shell
++    cmd = request.json.get("cmd", "")
++    stream = os.popen(cmd)
++    return {"output": stream.read()}
++
++
++@app.route("/echo")
++def echo():
++    # Reflected XSS: unescaped user input returned in HTML
++    msg = request.args.get("msg", "hi")
++    return f"<html><body>{msg}</body></html>"
++
++
++if __name__ == "__main__":
++    app.run(debug=True, host="0.0.0.0", port=5000)

@@ -1,0 +1,14 @@
+extract_top10:
+  description: >
+    Extract the OWASP Top 10 risks from the provided URL into structured JSON.
+    Return risk entries with ids, titles, descriptions, impacts, mitigations, and examples.
+    If a field is not available, use an empty value rather than guessing.
+  expected_output: >
+    A JSON object following the Top10JSON schema.
+
+validate_top10:
+  description: >
+    Validate and normalize the extracted Top10 JSON, ensuring all required fields
+    exist and severities are normalized to Critical/High/Medium/Low.
+  expected_output: >
+    A corrected and normalized Top10JSON object.

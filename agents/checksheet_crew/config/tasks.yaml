@@ -1,0 +1,19 @@
+extract_cheatsheet:
+  description: >
+    Extract the OWASP cheat sheet at the provided URL into a structured JSON
+    that matches the application's checksheet schema. Use the scraped content
+    and provide complete fields whenever possible. Focus on identifying risks,
+    impacts, mitigations, and examples. If a field cannot be found, use an empty
+    value instead of guessing.
+  expected_output: >
+    A JSON object following the ChecksheetJSON schema with all required fields
+    populated.
+
+validate_cheatsheet:
+  description: >
+    Validate and normalize the extracted checksheet JSON to ensure it is
+    consistent with the schema and safe to load into the application. Fix
+    missing optional fields with defaults and normalize severities to
+    Critical/High/Medium/Low.
+  expected_output: >
+    A corrected and normalized ChecksheetJSON object.
