@@ -587,10 +587,10 @@ def get_top10_risks(source_id: str, url: str, source_type: str) -> dict[str, dic
 
 def get_code_review_crew():
     """Load the code review crew dynamically."""
-    crew_src = Path(__file__).parent / "agents" / "code_review_flow" / "src"
-    if str(crew_src) not in sys.path:
-        sys.path.insert(0, str(crew_src))
-    from code_review_flow.crews.code_review_crew.crew import CodeReviewCrew
+    app_root = Path(__file__).parent
+    if str(app_root) not in sys.path:
+        sys.path.insert(0, str(app_root))
+    from agents.code_review_crew.crew import CodeReviewCrew
     return CodeReviewCrew().crew()
 
 
