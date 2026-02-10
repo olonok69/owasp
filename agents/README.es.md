@@ -2,6 +2,7 @@
 
 Un sistema de múltiples agentes construido con **CrewAI** que revisa automáticamente pull requests para calidad de código y vulnerabilidades de seguridad. Demuestra memoria, guardrails y execution hooks.
 
+
 ---
 
 ## Tabla de Contenido
